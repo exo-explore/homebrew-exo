@@ -12,8 +12,9 @@ class Exo < Formula
   sha256 ""
   license ""
 
-  depends_on "python@3.13"
   depends_on "uv" => :build
+  depends_on "go" => :build
+  depends_on "python@3.13"
   depends_on "macmon"
 
   # Additional dependency
@@ -23,6 +24,11 @@ class Exo < Formula
   # end
 
   def install
+    build_dir = buildpath + "build"
+    cd "networking/forwarder" do
+      system "go", "build", "-buildvcs=false", "-o", build_dir + "forwarder" .
+      libexec.install ../../build/forwarder
+    end
     venv = libexec/"venv"
     system "uv", "venv", venv, "--python", Formula["python@3.13"].opt_bin/"python3.13"
 
