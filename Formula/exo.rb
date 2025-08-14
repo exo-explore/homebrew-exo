@@ -24,15 +24,26 @@ class Exo < Formula
   # end
 
   def install
-    build_dir = buildpath + "build"
-    cd "networking/forwarder" do
-      system "go", "build", "-buildvcs=false", "-o", build_dir + "forwarder" .
-      libexec.install ../../build/forwarder
-    end
-    venv = libexec/"venv"
-    system "uv", "venv", venv, "--python", Formula["python@3.13"].opt_bin/"python3.13"
+    forwarder_build_path = libexec/"go_bin"
+    forwarder_build_path.mkpath
 
-    system venv/"bin/uv"
+    cd "networking/forwarder" do
+      system "go", "build", "-buildvcs=false", "-o", forwarder_build_path, "."
+    end
+
+    system "uv", "venv", libexec, "--python", Formula["python@3.13"].opt_bin/"python3.13"
+    #system "uv", "pip", "install", "--python", libexec/"bin/python", "./master", "./worker"
+    system "uv", "build", "--wheel", "--python", libexec/"bin/python", "--package", "worker"
+    system "uv", "build", "--wheel", "--python", libexec/"bin/python", "--package", "master"
+
+
+    bin.install_symlink Dir[libexec/"bin/*"]
+
+    ENV["FORWARDER_BUILD_PATH"] = forwarder_build_path.to_s
+
+    (libexec/"brew_env").write <<~EOS
+	export FORWARDER_BUILD_PATH="#{forwarder_build_path}"
+    EOS
   end
 
   test do
