@@ -7,13 +7,14 @@ class Exo < Formula
   desc ""
   homepage ""
   url "https://github.com/exo-explore/exo-v2.git",
-    using: :git
-    tag: "v0.0.1"
-  version "0.0.1"
+    using: :git,
+    branch: "homebrew"
   sha256 ""
   license ""
 
   depends_on "python@3.13"
+  depends_on "uv" => :build
+  depends_on "macmon"
 
   # Additional dependency
   # resource "" do
@@ -22,7 +23,10 @@ class Exo < Formula
   # end
 
   def install
-    virtualenv_install_with_resources
+    venv = libexec/"venv"
+    system "uv", "venv", venv, "--python", Formula["python@3.13"].opt_bin/"python3.13"
+
+    system venv/"bin/uv"
   end
 
   test do
