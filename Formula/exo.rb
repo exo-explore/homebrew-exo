@@ -31,13 +31,16 @@ class Exo < Formula
       system "go", "build", "-buildvcs=false", "-o", forwarder_build_path, "."
     end
 
+    ENV["VIRTUAL_ENV"] = libexec.to_s
+
     system "uv", "venv", libexec, "--python", Formula["python@3.13"].opt_bin/"python3.13"
-    #system "uv", "pip", "install", "--python", libexec/"bin/python", "./master", "./worker"
-    system "uv", "build", "--wheel", "--python", libexec/"bin/python", "--package", "worker"
-    system "uv", "build", "--wheel", "--python", libexec/"bin/python", "--package", "master"
+    system "uv", "pip", "install", "-e", ".", "--python", libexec/"bin/python"
+    #system "uv", "build", "--wheel", "--python", libexec/"bin/python", "--package", "worker"
+    #system "uv", "build", "--wheel", "--python", libexec/"bin/python", "--package", "master"
 
 
-    bin.install_symlink Dir[libexec/"bin/*"]
+    (bin/"exo-master").write_env_script libexec/"bin/exo-master", {} 
+    (bin/"exo-worker").write_env_script libexec/"bin/exo-worker", {} 
 
     ENV["FORWARDER_BUILD_PATH"] = forwarder_build_path.to_s
 
