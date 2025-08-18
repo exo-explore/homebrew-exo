@@ -25,6 +25,8 @@ class Exo < Formula
     dashboard_dir = share/"dashboard"
     dashboard_dir.mkpath
 
+    cp_r "dashboard/.", share/"dashboard" 
+
     ENV["GO_BUILD_DIR"] = go_build_dir
     
     system "just", "build-forwarder"
