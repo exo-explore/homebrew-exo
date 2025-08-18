@@ -14,6 +14,7 @@ class Exo < Formula
 
   depends_on "uv" => :build
   depends_on "go" => :build
+  depends_on "just" => :build
   depends_on "python@3.13"
   depends_on "macmon"
 
@@ -24,19 +25,18 @@ class Exo < Formula
   # end
 
   def install
-    forwarder_build_path = libexec/"go_bin"
-    forwarder_build_path.mkpath
-    forwarder = forwarder_build_path/"forwarder"
+    go_build_dir = libexec/"go_bin"
+    go_build_dir.mkpath
+
+    ENV["GO_BUILD_DIR"] = go_build_dir
     
-    cd "networking/forwarder" do
-      system "go", "build", "-buildvcs=false", "-o", forwarder_build_path, "."
-      chmod 0755, forwarder
-    end
+    system "just", "build-forwarder"
+
     system "uv", "venv", libexec, "--python", Formula["python@3.13"].opt_bin/"python3.13"
     system "uv", "pip", "install", ".", "--python", libexec/"bin/python"
 
-    (bin/"exo-master").write_env_script libexec/"bin/exo-master", FORWARDER_BUILD_PATH: forwarder
-    (bin/"exo-worker").write_env_script libexec/"bin/exo-worker", FORWARDER_BUILD_PATH: forwarder
+    (bin/"exo-master").write_env_script libexec/"bin/exo-master", GO_BUILD_DIR: go_build_dir
+    (bin/"exo-worker").write_env_script libexec/"bin/exo-worker", GO_BUILD_DIR: go_build_dir
   end
 
   test do
