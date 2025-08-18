@@ -34,9 +34,7 @@ class Exo < Formula
     ENV["VIRTUAL_ENV"] = libexec.to_s
 
     system "uv", "venv", libexec, "--python", Formula["python@3.13"].opt_bin/"python3.13"
-    system "uv", "pip", "install", "-e", ".", "--python", libexec/"bin/python"
-    #system "uv", "build", "--wheel", "--python", libexec/"bin/python", "--package", "worker"
-    #system "uv", "build", "--wheel", "--python", libexec/"bin/python", "--package", "master"
+    system "uv", "pip", "install", ".", "--python", libexec/"bin/python"
 
 
     (bin/"exo-master").write_env_script libexec/"bin/exo-master", {} 
