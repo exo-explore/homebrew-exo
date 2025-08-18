@@ -26,9 +26,10 @@ class Exo < Formula
   def install
     forwarder_build_path = libexec/"go_bin"
     forwarder_build_path.mkpath
-
-    system "go", "build", "-buildvcs=false", "-o", forwarder_build_path, "networking/forwarder"
-
+    
+    cd "networking/forwarder" do
+      system "go", "build", "-buildvcs=false", "-o", forwarder_build_path, "."
+    end
     system "uv", "venv", libexec, "--python", Formula["python@3.13"].opt_bin/"python3.13"
     system "uv", "pip", "install", ".", "--python", libexec/"bin/python"
 
