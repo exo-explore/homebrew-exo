@@ -27,21 +27,13 @@ class Exo < Formula
     forwarder_build_path = libexec/"go_bin"
     forwarder_build_path.mkpath
 
-    cd "networking/forwarder" do
-      system "go", "build", "-buildvcs=false", "-o", forwarder_build_path, "."
-    end
+    system "go", "build", "-buildvcs=false", "-o", forwarder_build_path, "networking/forwarder"
 
     system "uv", "venv", libexec, "--python", Formula["python@3.13"].opt_bin/"python3.13"
     system "uv", "pip", "install", ".", "--python", libexec/"bin/python"
 
-    (bin/"exo-master").write_env_script libexec/"bin/exo-master", {} 
-    (bin/"exo-worker").write_env_script libexec/"bin/exo-worker", {} 
-
-    ENV["FORWARDER_BUILD_PATH"] = forwarder_build_path.to_s
-
-    (libexec/"brew_env").write <<~EOS
-	export FORWARDER_BUILD_PATH="#{forwarder_build_path}"
-    EOS
+    (bin/"exo-master").write_env_script libexec/"bin/exo-master", FORWARDER_BUILD_PATH: forwarder_build_path
+    (bin/"exo-worker").write_env_script libexec/"bin/exo-worker", FORWARDER_BUILD_PATH: forwarder_build_path
   end
 
   test do
