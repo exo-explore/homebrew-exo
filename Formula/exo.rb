@@ -18,15 +18,12 @@ class Exo < Formula
   depends_on "python@3.13"
   depends_on "macmon"
 
-  # Additional dependency
-  # resource "" do
-  #   url ""
-  #   sha256 ""
-  # end
-
   def install
     go_build_dir = libexec/"go_bin"
     go_build_dir.mkpath
+
+    dashboard_dir = share/"dashboard"
+    dashboard_dir.mkpath
 
     ENV["GO_BUILD_DIR"] = go_build_dir
     
@@ -35,8 +32,8 @@ class Exo < Formula
     system "uv", "venv", libexec, "--python", Formula["python@3.13"].opt_bin/"python3.13"
     system "uv", "pip", "install", ".", "--python", libexec/"bin/python"
 
-    (bin/"exo-master").write_env_script libexec/"bin/exo-master", GO_BUILD_DIR: go_build_dir
-    (bin/"exo-worker").write_env_script libexec/"bin/exo-worker", GO_BUILD_DIR: go_build_dir
+    (bin/"exo-master").write_env_script libexec/"bin/exo-master", GO_BUILD_DIR: go_build_dir, DASHBOARD_DIR: dashboard_dir
+    (bin/"exo-worker").write_env_script libexec/"bin/exo-worker", GO_BUILD_DIR: go_build_dir, DASHBOARD_DIR: dashboard_dir
   end
 
   test do
