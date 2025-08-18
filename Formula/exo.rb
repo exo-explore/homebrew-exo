@@ -31,11 +31,8 @@ class Exo < Formula
       system "go", "build", "-buildvcs=false", "-o", forwarder_build_path, "."
     end
 
-    ENV["VIRTUAL_ENV"] = libexec.to_s
-
     system "uv", "venv", libexec, "--python", Formula["python@3.13"].opt_bin/"python3.13"
     system "uv", "pip", "install", ".", "--python", libexec/"bin/python"
-
 
     (bin/"exo-master").write_env_script libexec/"bin/exo-master", {} 
     (bin/"exo-worker").write_env_script libexec/"bin/exo-worker", {} 
