@@ -8,7 +8,7 @@ class Exo < Formula
   homepage ""
   url "https://github.com/exo-explore/exo-v2.git",
     using: :git,
-    branch: "homebrew"
+    branch: "logging_rework"
   sha256 ""
   license ""
 
@@ -36,6 +36,7 @@ class Exo < Formula
 
     (bin/"exo-master").write_env_script libexec/"bin/exo-master", GO_BUILD_DIR: go_build_dir, DASHBOARD_DIR: dashboard_dir
     (bin/"exo-worker").write_env_script libexec/"bin/exo-worker", GO_BUILD_DIR: go_build_dir, DASHBOARD_DIR: dashboard_dir
+    (bin/"exo").write_env_script libexec/"bin/exo", GO_BUILD_DIR: go_build_dir, DASHBOARD_DIR: dashboard_dir
   end
 
   test do
