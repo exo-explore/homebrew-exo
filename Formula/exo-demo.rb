@@ -17,6 +17,9 @@ class ExoDemo < Formula
   def install
     dashboard_dir = share/"dashboard"
     dashboard_dir.mkpath
+    
+    ENV["CARGO_HOME"] = buildpath/"cargo_home"
+    ENV["RUSTUP_HOME"] = buildpath/"rustup_home"
 
     cp_r "dashboard/.", share/"dashboard" 
 
