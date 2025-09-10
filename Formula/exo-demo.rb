@@ -6,7 +6,7 @@ class ExoDemo < Formula
 
   desc ""
   homepage ""
-  url = "https://drive.google.com/uc?export=download&id=1Y1zVWZCWVuC_1TgE06gLILSaaxAbUnuY"
+  url "https://drive.google.com/uc?export=download&id=1Y1zVWZCWVuC_1TgE06gLILSaaxAbUnuY"
   sha256 "e93b1a1b3d315aea81f53d567c6c529c8e91defe"
   license ""
 
