@@ -7,7 +7,7 @@ class ExoDemo < Formula
   desc ""
   homepage ""
   url "https://drive.google.com/uc?export=download&id=1Y1zVWZCWVuC_1TgE06gLILSaaxAbUnuY"
-  sha256 "e93b1a1b3d315aea81f53d567c6c529c8e91defe"
+  sha256 "09c4d6efa4177f12d10e386b4f92d818c8233486c768a3810c1edcd7cc970b6e"
   license ""
 
   depends_on "uv" => :build
