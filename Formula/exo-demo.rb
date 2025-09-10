@@ -13,6 +13,7 @@ class ExoDemo < Formula
   depends_on "uv" => :build
   depends_on "python@3.13"
   depends_on "macmon"
+  depends_on "maturin"
 
   def install
     dashboard_dir = share/"dashboard"
