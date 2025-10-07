@@ -14,7 +14,7 @@ class Exo < Formula
   license ""
 
   depends_on "uv" => :build
-  depends_on "rust" => :build
+  depends_on "rustup" => :build
   depends_on "python@3.13"
   depends_on "macmon"
 
