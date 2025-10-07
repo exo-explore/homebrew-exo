@@ -32,14 +32,22 @@ class Exo < Formula
     system "uv", "pip", "install", ".", "--python", libexec/"bin/python"
 
     (bin/"exo").write_env_script libexec/"bin/exo", DASHBOARD_DIR: dashboard_dir
+    bin.install "configure_mlx.sh" => "exo_configure_mlx"
   end
-
+  
   def caveats
   <<~EOS
     Heads up, you may have seen a 'Failed changing dylib ID' message at the end of the build. We're working on getting an upstream fix.
   EOS
   end
 
+  service do
+    run [bin/"exo_configure_mlx"]
+    run_type :immediate
+    keep_alive false
+    log_path var/"log/exo_configure_mlx.log"
+    error_log_path var/"log/exo_configure_mlx.log"
+  end
 
   test do
     # `test do` will create, run in and delete a temporary directory.
