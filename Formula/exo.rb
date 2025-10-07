@@ -36,6 +36,11 @@ class Exo < Formula
   def caveats
   <<~EOS
     Heads up, you may have seen a 'Failed changing dylib ID' message at the end of the build. We're working on getting an upstream fix.
+
+    To enable automatic VRAM configuration, run:
+      sudo brew services start exo
+
+    This just runs #{libexec}/configure-vram.sh on login
   EOS
   end
 
@@ -46,9 +51,6 @@ class Exo < Formula
     log_path var/"log/exo_configure_mlx.log"
     error_log_path var/"log/exo_configure_mlx.log"
   end
-
-  plist_options startup: true,
-                manual: "To enable automatic VRAM configuration, run:\n  sudo brew services start exo"
 
   test do
     # `test do` will create, run in and delete a temporary directory.
