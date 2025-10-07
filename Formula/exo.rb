@@ -26,10 +26,16 @@ class Exo < Formula
     dashboard_dir.mkpath
 
     cp_r "dashboard/.", share/"dashboard" 
+    
+    # Attempted fix for jiter bug
+    ENV.append "CFLAGS", "-headerpad_max_install_names"
+    ENV.append "LDFLAGS", "-headerpad_max_install_names"
+    ENV.append "RUSTFLAGS", "-Clink-arg=-Wl,-headerpad_max_install_names"
 
     system "uv", "venv", libexec, "--python", Formula["python@3.13"].opt_bin/"python3.13"
     ohai "Compiling Rust and C++ libs (This may take a while)"
     system "uv", "pip", "install", ".", "--python", libexec/"bin/python"
+    ohai "Heads up", "You may see 'Failed changing dylib ID' above - we're working on this, but it's mostly harmless!"
 
     (bin/"exo").write_env_script libexec/"bin/exo", DASHBOARD_DIR: dashboard_dir
   end
