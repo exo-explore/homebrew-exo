@@ -26,7 +26,8 @@ class Exo < Formula
     cp_r "dashboard/.", share/"dashboard" 
 
     system "uv", "venv", libexec, "--python", Formula["python@3.13"].opt_bin/"python3.13"
-    system "uv", "pip", "install", ".", "--python", libexec/"bin/python", verbose: true
+    ohai "Compiling Rust and C++ libs (This may take a while)"
+    system "uv", "pip", "install", ".", "--python", libexec/"bin/python"
 
     (bin/"exo").write_env_script libexec/"bin/exo", DASHBOARD_DIR: dashboard_dir
   end
