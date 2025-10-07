@@ -26,7 +26,7 @@ class Exo < Formula
     cp_r "dashboard/.", share/"dashboard" 
 
     system "uv", "venv", libexec, "--python", Formula["python@3.13"].opt_bin/"python3.13"
-    system "uv", "pip", "install", ".", "--python", libexec/"bin/python"
+    system "uv", "pip", "install", ".", "--python", libexec/"bin/python", verbose: true
 
     (bin/"exo").write_env_script libexec/"bin/exo", DASHBOARD_DIR: dashboard_dir
   end
