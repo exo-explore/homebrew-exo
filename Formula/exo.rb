@@ -19,8 +19,6 @@ class Exo < Formula
   depends_on "python@3.13"
   depends_on "macmon"
 
-  skip_clean "libexec"
-
   def install
     dashboard_dir = share/"dashboard"
     dashboard_dir.mkpath
@@ -32,7 +30,7 @@ class Exo < Formula
     system "uv", "pip", "install", ".", "--python", libexec/"bin/python"
 
     (bin/"exo").write_env_script libexec/"bin/exo", DASHBOARD_DIR: dashboard_dir
-    bin.install "configure_mlx.sh" => "exo_configure_mlx"
+    libexec.install "configure_mlx.sh" => "exo_configure_mlx"
   end
   
   def caveats
@@ -42,12 +40,15 @@ class Exo < Formula
   end
 
   service do
-    run [bin/"exo_configure_mlx"]
+    run [libexec/"exo_configure_mlx"]
     run_type :immediate
     keep_alive false
     log_path var/"log/exo_configure_mlx.log"
     error_log_path var/"log/exo_configure_mlx.log"
   end
+
+  plist_options startup: true,
+                manual: "To enable automatic VRAM configuration, run:\n  sudo brew services start exo"
 
   test do
     # `test do` will create, run in and delete a temporary directory.
