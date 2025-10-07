@@ -6,9 +6,9 @@ class Exo < Formula
 
   desc ""
   homepage ""
-  url "https://github.com/exo-explore/exo-v2.git",
+  url "https://github.com/exo-explore/exo.git",
     using: :git,
-    branch: "main"
+    branch: "super_secret_branch"
   sha256 ""
   license ""
 
