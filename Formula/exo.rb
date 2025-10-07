@@ -19,6 +19,8 @@ class Exo < Formula
   depends_on "python@3.13"
   depends_on "macmon"
 
+  skip_clean "libexec"
+
   def install
     dashboard_dir = share/"dashboard"
     dashboard_dir.mkpath
