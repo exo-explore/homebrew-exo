@@ -9,7 +9,7 @@ class Exo < Formula
   url "https://github.com/exo-explore/exo.git",
     using: :git,
     branch: "super_secret_branch"
-  version "0.9.2"
+  version "0.9.3"
   sha256 ""
   license ""
 
@@ -36,6 +36,8 @@ class Exo < Formula
   def caveats
   <<~EOS
     Heads up, you may have seen a 'Failed changing dylib ID' message at the end of the build. We're working on getting an upstream fix.
+    Exo is now installed! Launch with 
+      exo
 
     To enable automatic VRAM configuration, run:
       sudo brew services start exo
