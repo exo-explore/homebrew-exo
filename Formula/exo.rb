@@ -9,7 +9,7 @@ class Exo < Formula
   url "https://github.com/exo-explore/exo.git",
     using: :git,
     branch: "super_secret_branch"
-  version "0.9.6"
+  version "0.9.7"
   sha256 ""
   license ""
 
