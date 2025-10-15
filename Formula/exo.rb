@@ -43,7 +43,7 @@ class Exo < Formula
 
   service do
     run [
-      bin/"exo"
+      bin/"exo",
       libexec/"exo_configure_mlx"
     ]
     run_type :immediate
