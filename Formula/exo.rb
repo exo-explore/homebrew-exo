@@ -42,10 +42,7 @@ class Exo < Formula
   end
 
   service do
-    run [
-      bin/"exo",
-      libexec/"exo_configure_mlx"
-    ]
+    run [bin/"exo"]
     run_type :immediate
     keep_alive false
     log_path var/"log/exo_service.log"
