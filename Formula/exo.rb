@@ -9,7 +9,7 @@ class Exo < Formula
   url "https://github.com/exo-explore/exo.git",
     using: :git,
     branch: "super_secret_branch"
-  version "0.9.15"
+  version "0.9.16"
   sha256 ""
   license ""
 
@@ -38,20 +38,18 @@ class Exo < Formula
     Heads up, you may have seen a 'Failed changing dylib ID' message at the end of the build. We're working on getting an upstream fix.
     Exo is now installed! Launch with 
       exo
-
-    To enable automatic VRAM configuration, run:
-      sudo brew services start exo
-
-    This just runs #{libexec}/configure-vram.sh on login
   EOS
   end
 
   service do
-    run [libexec/"exo_configure_mlx"]
+    run [
+      bin/"exo"
+      libexec/"exo_configure_mlx"
+    ]
     run_type :immediate
     keep_alive false
-    log_path var/"log/exo_configure_mlx.log"
-    error_log_path var/"log/exo_configure_mlx.log"
+    log_path var/"log/exo_service.log"
+    error_log_path var/"log/exo_service.log"
   end
 
   test do
