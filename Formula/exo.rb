@@ -9,7 +9,7 @@ class Exo < Formula
   url "https://github.com/exo-explore/exo.git",
     using: :git,
     branch: "super_secret_branch"
-  version "0.9.16"
+  version "0.9.17"
   sha256 ""
   license ""
 
@@ -29,8 +29,7 @@ class Exo < Formula
     ohai "Compiling Rust and C++ libs (This may take a while)"
     system "uv", "pip", "install", ".", "--python", libexec/"bin/python"
 
-    (bin/"exo").write_env_script libexec/"bin/exo", DASHBOARD_DIR: dashboard_dir
-    libexec.install "configure_mlx.sh" => "exo_configure_mlx"
+    (bin/"exo").write_env_script libexec/"bin/exo", DASHBOARD_DIR: dashboard_dir, PATH: "#{Formula["macmon"].opt_bin}:$PATH"
   end
   
   def caveats
